@@ -1,0 +1,50 @@
+stages:
+  - build
+  - test
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+
+# ============ DEV ============
+build_dev:
+  stage: build
+  script:
+    - echo "Instalando dependencias en DEV..."
+    - pip install -r requirements.txt
+    - echo "Dependencias instaladas correctamente en DEV"
+  only:
+    - develop
+
+test_dev:
+  stage: test
+  script:
+    - echo "Ejecutando validaciones en DEV..."
+    - pip install -r requirements.txt
+    - python -c "import flask; import flask_restx; import jwt; import werkzeug; print('Todos los modulos disponibles en DEV')"
+    - echo "Pipeline DEV completado exitosamente"
+  only:
+    - develop
+
+# ============ PROD ============
+build_prod:
+  stage: build
+  script:
+    - echo "Instalando dependencias en PROD..."
+    - pip install -r requirements.txt
+    - echo "Dependencias instaladas correctamente en PROD"
+  only:
+    - main
+
+test_prod:
+  stage: test
+  script:
+    - echo "Ejecutando validaciones en PROD..."
+    - pip install -r requirements.txt
+    - python -c "import flask; import flask_restx; import jwt; import werkzeug; print('Todos los modulos disponibles en PROD')"
+    - echo "Pipeline PROD completado exitosamente"
+  only:
+    - main

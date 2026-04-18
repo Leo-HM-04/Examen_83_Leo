@@ -1,0 +1,7 @@
+ExamenLeo/
+__pycache__/
+*.pyc
+*.pyo
+.pip-cache/
+*.db
+.env
